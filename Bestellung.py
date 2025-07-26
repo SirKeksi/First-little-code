@@ -75,7 +75,7 @@ class shop:
     def check_avail(self, product):
         found = False
         for object in self.pl:
-            if Produkt == object.give_name():
+            if product == object.give_name():
                 found = True
                 print(object.give_number())
         if not found:
