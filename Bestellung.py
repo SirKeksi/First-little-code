@@ -54,7 +54,7 @@ class customer:
                 del self.wk[object]
     def more(self, product, Amount): 
         for object, amount in self.wk.items():
-            if Produkt == object.give_name():
+            if product == object.give_name():
                 success = object.deduct(Amount)
                 if success:
                     self.wk[object] += Amount
