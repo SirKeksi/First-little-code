@@ -1,92 +1,92 @@
 class Produkt:
-    def __init__(self, Name, Preis, Bestand):
-        self.Name = Name
-        self.Preis = float(Preis)
-        self.Bestand = int(Bestand)
-    def geb_bestand(self):
-        return self.Bestand
-    def geb_name(self):
-        return self.Name
-    def geb_preis(self):
-        return self.Preis
-    def weniger(self, Menge):
-        if Menge > self.Bestand:
-            print("Zu viele Produkte")
+    def __init__(self, name, price, number):
+        self.name = name
+        self.price = float(price)
+        self.number = int(number)
+    def give_number(self):
+        return self.number
+    def give_name(self):
+        return self.name
+    def give_price(self):
+        return self.price
+    def deduct(self, Number):
+        if Number > self.number:
+            print("Too many products")
             return False
-        elif self.Bestand == 0:
-            print("Produkt nicht verfügbar")
+        elif self.number == 0:
+            print("product not available")
             return False
         else:
-            self.Bestand -= Menge
+            self.number -= number
             return True
 
-class Kunde:
-    def __init__(self, Name, shop):
-        self.Name = Name
-        self.wk = {} # Warenkorb
+class customer:
+    def __init__(self, name, shop):
+        self.name = name
+        self.wk = {} 
         self.shop = shop
-    def einkaufen(self, Produkt, Menge):
-        gefunden = False
+    def buy(self, product, amount):
+        found = False
         for object in self.wk:
-            if object.geb_name() == Produkt:
-                gefunden = True
+            if object.give_name() == product:
+                found = True
                 break
-        if not gefunden:
-             for objekt in self.shop.pl:
-                if Produkt == objekt.geb_name():
-                    erfolg = objekt.weniger(Menge)
-                    if erfolg:
-                        self.wk[objekt] = Menge
+        if not found:
+             for object in self.shop.pl:
+                if product == objekt.give_name():
+                    success = objekt.deduct(amount)
+                    if success:
+                        self.wk[object] = amount
                     else:
-                        print("Vorgang nicht möglich")
+                        print("Process not possible")
                 else:
-                    print("Produkt nicht gefunden")
-        if gefunden:
-            print("Produkt bereits im Warenkorb")
-    def einkauf(self):
+                    print("Product not found")
+        if found:
+            print("Prodct already in you shopping list")
+    def shopping_list(self):
         D = {}
-        for objekt, menge in self.wk.items():
+        for objekt, amount in self.wk.items():
             D[objekt.geb_name()] = menge
         return D
-    def ändern(self, Produkt):
-        for objekt in self.shop.pl:
-            if Produkt == objekt.geb_name():
-                del self.wk[objekt]
-    def mehr(self, Produkt, Menge): # Zählt hier mehr dazu als er sollte
-        for object, menge in self.wk.items():
-            if Produkt == object.geb_name():
-                erfolg = object.weniger(Menge)
-                if erfolg:
-                    self.wk[object] += Menge
-    def bestellen(self):
-        Gesamt = 0 # Unbedingt außerhalb der Schleife da er sonst: 1) Nach jedem Durchlauf auf 0 gesetzt wird und 2) falls nichts drin ist ein Fehler kommt
-        for objekt, menge in self.wk.items():
-            Zusatz = objekt.geb_preis() * menge
-            Gesamt += Zusatz
-        return Gesamt
+    def change(self, product):
+        for object in self.shop.pl:
+            if product == objekt.give_name():
+                del self.wk[object]
+    def more(self, product, Amount): 
+        for object, amount in self.wk.items():
+            if Produkt == object.give_name():
+                success = object.deduct(Amount)
+                if success:
+                    self.wk[object] += Amount
+    def pay(self):
+        Total = 0 
+        for objekt, amount in self.wk.items():
+            Add = objekt.geb_preis() * amount
+            Total += Add
+        return Total
 
 class shop:
     def __init__(self):
-        self.kl = [] # Kundenliste
-        self.pl = [] # Produktliste -> Beide als Objekte darin gespeichert
-    def neues_prod(self, Name, Preis, Bestand):
-        self.pl.append(Produkt(Name, Preis, Bestand))
+        self.cl = [] 
+        self.pl = [] 
+    def new_prod(self, name, price, number):
+        self.pl.append(Produkt(name, price, number))
         return self.pl
-    def check_verf(self, Produkt):
-        gefunden = False
+    def check_avail(self, product):
+        found = False
         for object in self.pl:
-            if Produkt == object.geb_name():
-                gefunden = True
-                print(object.geb_bestand())
-        if not gefunden:
-            print("Produkt nicht gefunden")
-    def zeige_prod(self):
+            if Produkt == object.give_name():
+                found = True
+                print(object.give_number())
+        if not found:
+            print("Product not found")
+    def show_prod(self):
         if self.pl:
             L = []
             for object in self.pl:
-                L.append(object.geb_name())
-            print(L) # Außerhalb der Schleife da ansonsten die Liste mehrfach printed wird
+                L.append(object.give_name())
+            print(L) 
         else:
-            print("Keine Produkte vorhanden")
+            print("No products available")
 
 
